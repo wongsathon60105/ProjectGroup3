@@ -1,5 +1,5 @@
 streamlit>=1.26.0
 numpy
 pandas
-plotly.graph_objects
-scipy.integrate
+plotly
+scipy
