@@ -82,7 +82,7 @@ st.sidebar.markdown("""
 
 st.title("Project 3: Comparison of Numerical Integration Approximations")
 
-st.caption(f"ประมาณค่าอินทิเกรตของ f(x) = √(1 + eˣ) จาก a = {a} ถึง b = {b}")
+st.caption(f"ประมาณค่าอินทิเกรตของ f(x) = 1 + eˣ จาก a = {a} ถึง b = {b}")
 
 tab1, tab2, tab3 = st.tabs([
     "📚 1. ทฤษฎี (Theory)", 
@@ -93,7 +93,7 @@ tab1, tab2, tab3 = st.tabs([
 with tab1:
     st.header("📖 ทฤษฎีการประมาณค่าการอินทิเกรตทางตัวเลข")
     st.write("โจทย์กำหนดให้ประมาณค่าการอินทิเกรตของฟังก์ชัน:")
-    st.latex(r"A = \int_{a}^{b} \sqrt{1 + e^x} \, dx")
+    st.latex(r"A = \int_{a}^{b} (1 + e^x) \, dx")
     
     col1, col2 = st.columns(2)
     with col1:
