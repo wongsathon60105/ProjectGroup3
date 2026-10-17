@@ -4,19 +4,14 @@ import pandas as pd
 import plotly.graph_objects as go
 from scipy.integrate import quad
 
-# ==========================================
-# PAGE CONFIG & CUSTOM CSS (ตกแต่งสวยงาม)
-# ==========================================
 st.set_page_config(
     page_title="Project 3: Numerical Integration",
     page_icon="🧮",
     layout="wide"
 )
 
-# Custom CSS ตกแต่ง Tabs และ UI
 st.markdown("""
 <style>
-    /* ปรับแต่ง Tabs */
     .stTabs [data-baseweb="tab-list"] { 
         gap: 8px; 
     }
@@ -31,7 +26,6 @@ st.markdown("""
         color: white !important;
     }
     
-    /* การ์ดเน้นข้อความ */
     .info-card {
         background-color: #f0f7ff;
         border: 1px solid #cce5ff;
@@ -42,12 +36,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ==========================================
-# HELPER FUNCTIONS (f(x) = sqrt(1 + e^x))
-# ==========================================
 def f(x):
-    """ฟังก์ชัน f(x) = sqrt(1 + e^x) ตามโจทย์ Project 3"""
-    return np.sqrt(1 + np.exp(x))
+    return 1 + np.exp(x)
 
 def trapezoidal_rule(a, b, n):
     x = np.linspace(a, b, n + 1)
@@ -65,27 +55,19 @@ def simpsons_rule(a, b, n):
     integration = (h / 3) * (y[0] + 4 * np.sum(y[1:-1:2]) + 2 * np.sum(y[2:-1:2]) + y[-1])
     return integration, x, y, h
 
-# ==========================================
-# SIDEBAR (ตั้งค่าพารามิเตอร์ขึ้นก่อน)
-# ==========================================
 st.sidebar.title("⚙️ ตั้งค่าพารามิเตอร์ (Inputs)")
 
-# Interactive Controls
 a = st.sidebar.number_input("📌 ขอบเขตล่าง (a):", value=0.0, step=0.00001, format="%.5f")
 b = st.sidebar.number_input("📌 ขอบเขตบน (b):", value=2.0, step=0.00001, format="%.5f")
 n = st.sidebar.select_slider("🔢 จำนวนช่วงแบ่ง (n):", options=[8, 16, 32, 64], value=64)
 method_choice = st.sidebar.selectbox("📈 เลือกวิธีแสดงผลกราฟ:", ["Trapezoidal Rule", "Simpson's Rule"])
 
-# คำนวณค่าจริง Exact Value ด้วย scipy.integrate.quad
 exact_val, _ = quad(f, a, b)
 trap_val, x_trap, y_trap, h_trap = trapezoidal_rule(a, b, n)
 simp_val, x_simp, y_simp, h_simp = simpsons_rule(a, b, n)
 
 st.sidebar.markdown("---")
 
-# --------------------------------------------------------------------------
-# ข้อมูลผู้จัดทำ (ย้ายมาไว้ด้านล่างสุดของ Sidebar)
-# --------------------------------------------------------------------------
 st.sidebar.title("👥 PROJECT3#")
 st.sidebar.markdown("""
 <div style="background-color: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #e9ecef;">
@@ -98,10 +80,6 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-
-# ==========================================
-# MAIN CONTENT
-# ==========================================
 st.title("Project 3: Comparison of Numerical Integration Approximations")
 
 st.caption(f"ประมาณค่าอินทิเกรตของ f(x) = √(1 + eˣ) จาก a = {a} ถึง b = {b}")
@@ -112,13 +90,9 @@ tab1, tab2, tab3 = st.tabs([
     "📝 3. สรุปผล (Results & Output)"
 ])
 
-# ------------------------------------------
-# TAB 1: Theory
-# ------------------------------------------
 with tab1:
     st.header("📖 ทฤษฎีการประมาณค่าการอินทิเกรตทางตัวเลข")
     st.write("โจทย์กำหนดให้ประมาณค่าการอินทิเกรตของฟังก์ชัน:")
-    
     st.latex(r"A = \int_{a}^{b} \sqrt{1 + e^x} \, dx")
     
     col1, col2 = st.columns(2)
@@ -137,10 +111,7 @@ with tab1:
         st.latex(r"\int_{a}^{b} f(x) \, dx \approx \frac{h}{3} \left[ f(x_0) + 4\sum_{i \text{ odd}} f(x_i) + 2\sum_{i \text{ even}} f(x_i) + f(x_n) \right]")
         st.latex(r"h = \frac{b - a}{n}")
         st.markdown("</div>", unsafe_allow_html=True)
-
-# ------------------------------------------
-# TAB 2: Dynamic Visualization
-# ------------------------------------------
+        
 with tab2:
     st.header("📊 กราฟจำลองพื้นที่และการแสดงผลคำนวณ")
     
@@ -156,14 +127,12 @@ with tab2:
     
     fig = go.Figure()
     
-    # เส้นฟังก์ชัน f(x)
     fig.add_trace(go.Scatter(
         x=x_dense, y=y_dense, 
         mode='lines', name='f(x) = √(1 + eˣ)',
         line=dict(color='#d62728', width=2.5)
     ))
     
-    # พื้นที่แรเงาใต้กราฟ
     x_curr = x_trap if method_choice == "Trapezoidal Rule" else x_simp
     y_curr = y_trap if method_choice == "Trapezoidal Rule" else y_simp
     
@@ -176,7 +145,6 @@ with tab2:
         name=f'พื้นที่ประมาณค่า ({method_choice})'
     ))
     
-    # จุดพิกัดบนโค้ง
     fig.add_trace(go.Scatter(
         x=x_curr, y=y_curr,
         mode='markers', name='Node Points',
@@ -195,9 +163,6 @@ with tab2:
     
     st.plotly_chart(fig, use_container_width=True)
 
-# ------------------------------------------
-# TAB 3: Step-by-Step & Results
-# ------------------------------------------
 with tab3:
     st.header("📝 ผลลัพธ์การคำนวณและตารางสรุปผล")
     
