@@ -179,7 +179,7 @@ with tab3:
 
     st.markdown("---")
 
-    st.subheader("1. ตารางแสดงค่า Error เมื่อเปลี่ยน n (ข้อ 3 ในโจทย์)")
+    st.subheader("1. ตารางแสดงค่า Error เมื่อเปลี่ยน n")
     n_list = [8, 16, 32, 64]
     trap_errs, simp_errs = [], []
     
@@ -196,7 +196,7 @@ with tab3:
     })
     st.dataframe(df_n_error, use_container_width=True)
 
-    st.subheader("2. ตารางเปรียบเทียบ Error เมื่อ n = 64 (ข้อ 4 ในโจทย์)")
+    st.subheader("2. ตารางเปรียบเทียบ Error เมื่อ n = 64")
     t_64, _, _, _ = trapezoidal_rule(a, b, 64)
     s_64, _, _, _ = simpsons_rule(a, b, 64)
     
