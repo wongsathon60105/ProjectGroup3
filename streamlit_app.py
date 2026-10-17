@@ -215,9 +215,7 @@ with tab3:
 Trapezoidal     {t_64:<12.6f} {abs(exact_val - t_64):.5E}
 Simpson         {s_64:<12.6f} {abs(exact_val - s_64):.5E}"""
 
-    st.markdown(f"""
-    <pre style="
-        font-size: 18px; 
+    st.markdown(f"""<pre style="font-size: 18px; 
         font-family: 'Courier New', Courier, monospace; 
         line-height: 1.6; 
         background-color: #f8f9fa; 
