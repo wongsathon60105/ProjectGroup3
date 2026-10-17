@@ -208,14 +208,19 @@ with tab3:
     })
     st.dataframe(df_compare_64, use_container_width=True)
 
-    st.subheader("3. สรุป Output จากทั้งสามวิธี")
+   st.subheader("3. สรุป Output จากทั้งสามวิธี")
+    st.markdown("""
+    <style>
+        .stCodeBlock pre code {
+            font-size: 18px !important;
+            line-height: 1.6 !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
     output_text = f"""Method          A~1          Error A1
-------------------------------------------------------------
+----------------------------------------
 Trapezoidal     {t_64:<12.6f} {abs(exact_val - t_64):.5E}
 Simpson         {s_64:<12.6f} {abs(exact_val - s_64):.5E}"""
 
-    st.markdown(
-        f'<pre style="font-size: 18px; font-family: monospace; line-height: 1.6; background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 16px; border-radius: 8px; font-weight: 500;">{output_text}</pre>',
-        unsafe_allow_html=True
-    )
+    st.code(output_text, language="text")
