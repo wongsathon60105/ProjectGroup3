@@ -129,7 +129,7 @@ with tab2:
     
     fig.add_trace(go.Scatter(
         x=x_dense, y=y_dense, 
-        mode='lines', name='f(x) = √(1 + eˣ)',
+        mode='lines', name='f(x) = 1 + eˣ',
         line=dict(color='#d62728', width=2.5)
     ))
     
